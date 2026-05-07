@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: portfolio-kablankan
+    env: node
+    region: frankfurt
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3000
+      - key: PUBLIC_URL
+        value: https://portfolio-kablankan.onrender.com
+      - key: CORS_ORIGIN
+        value: https://portfolio-kablankan.onrender.com
+      - key: RATE_LIMIT_WINDOW_MS
+        value: "900000"
+      - key: RATE_LIMIT_MAX
+        value: "100"

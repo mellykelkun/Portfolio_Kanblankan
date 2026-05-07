@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kablankan Tiemele Israël Kévin | Architecte Logiciel & IA</title>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg: #0a0a0f;
+            --surface: #12121a;
+            --surface2: #1a1a2e;
+            --primary: #6c5ce7;
+            --primary2: #a29bfe;
+            --accent: #00d2d3;
+            --gold: #feca57;
+            --text: #e2e8f0;
+            --text2: #a0aec0;
+            --code: #48bb78;
+            --red: #fc5c65;
+            --orange: #fd9644;
+            --border: #2d2d44;
+            --glow: 0 0 30px rgba(108,92,231,0.3);
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+            cursor: default;
+            scroll-behavior: smooth;
+        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 3px; }
+
+        /* Animations clés */
+        @keyframes float { 0%,100% { transform: translateY(0px); } 50% { transform: translateY(-20px); } }
+        @keyframes pulse { 0%,100% { opacity: 0.4; } 50% { opacity: 1; } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(60px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideRight { from { opacity: 0; transform: translateX(-60px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes scaleIn { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
+        @keyframes typing { from { width: 0; } to { width: 100%; } }
+        @keyframes blink { 0%,100% { border-color: transparent; } 50% { border-color: var(--primary); } }
+        @keyframes shimmer { 0% { background-position: -200% center; } 100% { background-position: 200% center; } }
+        @keyframes orbit { from { transform: rotate(0deg) translateX(80px) rotate(0deg); } to { transform: rotate(360deg) translateX(80px) rotate(-360deg); } }
+        @keyframes orbit2 { from { transform: rotate(120deg) translateX(120px) rotate(-120deg); } to { transform: rotate(480deg) translateX(120px) rotate(-480deg); } }
+        @keyframes orbit3 { from { transform: rotate(240deg) translateX(60px) rotate(-240deg); } to { transform: rotate(600deg) translateX(60px) rotate(-600deg); } }
+        @keyframes particleUp { 0% { opacity:1; transform:translateY(0) scale(1); } 100% { opacity:0; transform:translateY(-200px) scale(0); } }
+
+        .particle { position: fixed; pointer-events: none; z-index: 9999; animation: particleUp 1.5s ease-out forwards; }
+        .cursor-glow { position: fixed; width: 400px; height: 400px; border-radius: 50%; background: radial-gradient(circle, rgba(108,92,231,0.08) 0%, transparent 70%); pointer-events: none; z-index: 0; transform: translate(-50%,-50%); transition: opacity 0.3s; }
+        .parallax-bg { position: fixed; inset: 0; z-index: 0; overflow: hidden; }
+        .grid-line { position: absolute; background: rgba(108,92,231,0.03); }
+        .grid-h { width: 100%; height: 1px; }
+        .grid-v { width: 1px; height: 100%; }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+        .section { padding: 120px 0; position: relative; }
+
+        /* Navigation */
+        .navbar {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            background: rgba(10,10,15,0.85); backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border); transition: all 0.3s;
+        }
+        .navbar.scrolled { box-shadow: 0 4px 30px rgba(0,0,0,0.5); }
+        .nav-inner { max-width: 1200px; margin: 0 auto; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; }
+        .nav-logo { font-family: 'Space Grotesk', sans-serif; font-size: 1.4rem; font-weight: 700; background: linear-gradient(135deg, var(--primary2), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; cursor: pointer; }
+        .nav-links { display: flex; gap: 32px; list-style: none; }
+        .nav-links a { color: var(--text2); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.3s; position: relative; }
+        .nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: var(--primary); transition: width 0.3s; }
+        .nav-links a:hover { color: var(--text); }
+        .nav-links a:hover::after { width: 100%; }
+
+        /* Hero */
+        .hero { min-height: 100vh; display: flex; align-items: center; position: relative; overflow: hidden; }
+        .hero-orb { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.3; }
+        .hero-orb1 { width: 400px; height: 400px; background: var(--primary); top: 10%; left: -10%; animation: float 6s ease-in-out infinite; }
+        .hero-orb2 { width: 300px; height: 300px; background: var(--accent); bottom: 20%; right: -5%; animation: float 8s ease-in-out infinite 2s; }
+        .hero-orb3 { width: 200px; height: 200px; background: var(--gold); top: 50%; left: 50%; animation: float 7s ease-in-out infinite 1s; }
+        .hero-content { position: relative; z-index: 2; max-width: 800px; }
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 8px 16px; border-radius: 50px;
+            background: rgba(108,92,231,0.15); border: 1px solid rgba(108,92,231,0.3);
+            font-size: 0.85rem; font-weight: 500; color: var(--primary2);
+            margin-bottom: 32px; animation: slideUp 0.8s ease-out;
+        }
+        .hero-badge-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
+        .hero-name { font-family: 'Space Grotesk', sans-serif; font-size: 4.5rem; font-weight: 800; line-height: 1.1; margin-bottom: 20px; animation: slideUp 0.8s ease-out 0.2s both; }
+        .hero-name span { background: linear-gradient(135deg, var(--primary2), var(--accent), var(--gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero-title { font-size: 1.4rem; color: var(--text2); margin-bottom: 24px; font-weight: 400; animation: slideUp 0.8s ease-out 0.4s both; }
+        .hero-description { font-size: 1.1rem; color: var(--text2); line-height: 1.8; margin-bottom: 40px; max-width: 600px; animation: slideUp 0.8s ease-out 0.6s both; }
+        .hero-cta { display: flex; gap: 16px; animation: slideUp 0.8s ease-out 0.8s both; }
+        .btn { padding: 14px 28px; border-radius: 12px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.3s; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; border: none; font-family: 'Inter', sans-serif; }
+        .btn-primary { background: var(--primary); color: white; box-shadow: var(--glow); }
+        .btn-primary:hover { background: var(--primary2); transform: translateY(-2px); box-shadow: 0 0 50px rgba(108,92,231,0.5); }
+        .btn-outline { background: transparent; color: var(--text); border: 1px solid var(--border); }
+        .btn-outline:hover { border-color: var(--primary); background: rgba(108,92,231,0.1); transform: translateY(-2px); }
+
+        /* Code rain */
+        .code-rain { position: absolute; right: 0; top: 0; width: 500px; height: 100%; opacity: 0.08; pointer-events: none; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; line-height: 1.5; color: var(--code); overflow: hidden; }
+        .code-line { white-space: nowrap; }
+
+        /* Section title */
+        .section-title { font-family: 'Space Grotesk', sans-serif; font-size: 2.5rem; font-weight: 700; margin-bottom: 16px; }
+        .section-title span { background: linear-gradient(135deg, var(--primary2), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .section-subtitle { color: var(--text2); font-size: 1.1rem; margin-bottom: 60px; max-width: 600px; }
+
+        /* Stats */
+        .stats-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 24px; margin-bottom: 80px; }
+        .stat-card {
+            background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
+            padding: 32px; text-align: center; transition: all 0.3s; cursor: default;
+        }
+        .stat-card:hover { border-color: var(--primary); transform: translateY(-4px); box-shadow: var(--glow); }
+        .stat-number { font-family: 'Space Grotesk', sans-serif; font-size: 3rem; font-weight: 800; background: linear-gradient(135deg, var(--primary2), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .stat-label { color: var(--text2); margin-top: 8px; font-size: 0.9rem; }
+
+        /* Skills */
+        .skills-container { display: flex; flex-wrap: wrap; gap: 12px; }
+        .skill-tag {
+            padding: 10px 20px; border-radius: 50px;
+            background: var(--surface2); border: 1px solid var(--border);
+            font-size: 0.9rem; font-weight: 500; cursor: default;
+            transition: all 0.3s; color: var(--text2);
+        }
+        .skill-tag:hover {
+            border-color: var(--primary); background: rgba(108,92,231,0.1);
+            color: var(--primary2); transform: translateY(-2px);
+        }
+
+        /* Projects */
+        .projects-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 24px; }
+        .project-card {
+            background: var(--surface); border: 1px solid var(--border); border-radius: 20px;
+            padding: 36px; transition: all 0.4s; cursor: pointer; position: relative; overflow: hidden;
+        }
+        .project-card:hover { border-color: var(--primary); transform: translateY(-8px); box-shadow: 0 20px 60px rgba(0,0,0,0.4); }
+        .project-card::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at var(--mx) var(--my), rgba(108,92,231,0.1) 0%, transparent 50%); opacity: 0; transition: opacity 0.3s; }
+        .project-card:hover::before { opacity: 1; }
+        .project-icon { font-size: 2.5rem; margin-bottom: 20px; }
+        .project-name { font-family: 'Space Grotesk', sans-serif; font-size: 1.3rem; font-weight: 700; margin-bottom: 8px; }
+        .project-desc { color: var(--text2); font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px; }
+        .project-tech { display: flex; flex-wrap: wrap; gap: 8px; }
+        .project-tech span {
+            padding: 4px 12px; border-radius: 20px; font-size: 0.75rem;
+            background: rgba(108,92,231,0.15); color: var(--primary2); font-weight: 500;
+        }
+
+        /* Expanded project modal */
+        .modal-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(10px);
+            z-index: 2000; display: flex; align-items: center; justify-content: center;
+        }
+        .modal-content {
+            background: var(--surface); border: 1px solid var(--border); border-radius: 24px;
+            padding: 48px; max-width: 800px; width: 90%; max-height: 80vh; overflow-y: auto;
+            animation: scaleIn 0.3s ease-out;
+        }
+        .modal-close {
+            position: absolute; top: 20px; right: 20px;
+            background: none; border: none; color: var(--text); font-size: 1.5rem; cursor: pointer;
+        }
+
+        /* Experience timeline */
+        .timeline { position: relative; padding-left: 40px; }
+        .timeline::before { content: ''; position: absolute; left: 16px; top: 0; bottom: 0; width: 2px; background: var(--border); }
+        .timeline-item { position: relative; margin-bottom: 48px; }
+        .timeline-dot { position: absolute; left: -32px; top: 4px; width: 16px; height: 16px; border-radius: 50%; background: var(--primary); border: 3px solid var(--bg); z-index: 1; }
+        .timeline-date { font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: var(--accent); margin-bottom: 8px; }
+        .timeline-title { font-size: 1.2rem; font-weight: 600; margin-bottom: 8px; }
+        .timeline-desc { color: var(--text2); line-height: 1.6; }
+
+        /* Footer */
+        .footer { text-align: center; padding: 60px 24px; border-top: 1px solid var(--border); }
+        .footer-text { color: var(--text2); font-size: 0.9rem; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-name { font-size: 2.8rem; }
+            .projects-grid { grid-template-columns: 1fr; }
+            .stats-grid { grid-template-columns: repeat(2,1fr); }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef, useCallback } = React;
+
+        // ==================== PARTICULES MAGIQUES ====================
+        const useParticles = () => {
+            useEffect(() => {
+                const handleClick = (e) => {
+                    const colors = ['#6c5ce7', '#a29bfe', '#00d2d3', '#feca57', '#fc5c65'];
+                    for (let i = 0; i < 8; i++) {
+                        const particle = document.createElement('div');
+                        particle.className = 'particle';
+                        particle.style.left = e.clientX + 'px';
+                        particle.style.top = e.clientY + 'px';
+                        particle.style.width = (4 + Math.random() * 8) + 'px';
+                        particle.style.height = particle.style.width;
+                        particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                        particle.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+                        particle.style.animationDuration = (1 + Math.random() * 1.5) + 's';
+                        const angle = Math.random() * Math.PI * 2;
+                        const distance = 30 + Math.random() * 80;
+                        particle.style.setProperty('--dx', Math.cos(angle) * distance + 'px');
+                        particle.style.setProperty('--dy', Math.sin(angle) * distance + 'px');
+                        particle.style.animation = `particleUp ${1 + Math.random() * 1.5}s ease-out forwards`;
+                        particle.style.transform = `translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance - 200}px) scale(0)`;
+                        document.body.appendChild(particle);
+                        setTimeout(() => particle.remove(), 2000);
+                    }
+                };
+                document.addEventListener('click', handleClick);
+                return () => document.removeEventListener('click', handleClick);
+            }, []);
+        };
+
+        // ==================== CURSEUR GLOW ====================
+        const useCursorGlow = () => {
+            useEffect(() => {
+                const glow = document.createElement('div');
+                glow.className = 'cursor-glow';
+                document.body.appendChild(glow);
+                const handleMove = (e) => {
+                    glow.style.left = e.clientX + 'px';
+                    glow.style.top = e.clientY + 'px';
+                    glow.style.opacity = '1';
+                };
+                const handleLeave = () => { glow.style.opacity = '0'; };
+                document.addEventListener('mousemove', handleMove);
+                document.addEventListener('mouseleave', handleLeave);
+                return () => {
+                    document.removeEventListener('mousemove', handleMove);
+                    document.removeEventListener('mouseleave', handleLeave);
+                    glow.remove();
+                };
+            }, []);
+        };
+
+        // ==================== COMPOSANTS ====================
+        function Navbar() {
+            const [scrolled, setScrolled] = useState(false);
+            useEffect(() => {
+                const h = () => setScrolled(window.scrollY > 50);
+                window.addEventListener('scroll', h);
+                return () => window.removeEventListener('scroll', h);
+            }, []);
+            return (
+                <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
+                    <div className="nav-inner">
+                        <div className="nav-logo" onClick={() => window.scrollTo({top:0,behavior:'smooth'})}>
+                            &lt;KK /&gt;
+                        </div>
+                        <ul className="nav-links">
+                            <li><a href="#about" onClick={e=>{e.preventDefault();document.getElementById('about').scrollIntoView({behavior:'smooth'});}}>À propos</a></li>
+                            <li><a href="#projects" onClick={e=>{e.preventDefault();document.getElementById('projects').scrollIntoView({behavior:'smooth'});}}>Projets</a></li>
+                            <li><a href="#skills" onClick={e=>{e.preventDefault();document.getElementById('skills').scrollIntoView({behavior:'smooth'});}}>Compétences</a></li>
+                            <li><a href="#contact" onClick={e=>{e.preventDefault();document.getElementById('contact').scrollIntoView({behavior:'smooth'});}}>Contact</a></li>
+                        </ul>
+                    </div>
+                </nav>
+            );
+        }
+
+        function Hero() {
+            const codeLines = [
+                'const architect = new SystemArchitect();',
+                'architect.design({',
+                '  stack: "full-stack",',
+                '  ai: "orchestrated",',
+                '  security: "zero-trust",',
+                '  scalability: "unlimited"',
+                '});',
+                'architect.deploy();',
+                '// Output: Production-ready ecosystem',
+                '',
+                'class AIAgent extends AutonomousAgent {',
+                '  constructor() {',
+                '    super({ precision: "surgical" });',
+                '    this.capabilities = [',
+                '      "code_audit",',
+                '      "system_orchestration",',
+                '      "security_review"',
+                '    ];',
+                '  }',
+                '}',
+                '',
+                'const prompt = new Prompt({',
+                '  target: "optimal_performance",',
+                '  context: "full_codebase",',
+                '  style: "zero_ambiguity"',
+                '});',
+                'ai.engineer(prompt);',
+            ];
+
+            const [typedText, setTypedText] = useState('');
+            const [lineIndex, setLineIndex] = useState(0);
+            const [charIndex, setCharIndex] = useState(0);
+            const [titleVisible, setTitleVisible] = useState(false);
+
+            useEffect(() => {
+                if (lineIndex < codeLines.length) {
+                    if (charIndex < codeLines[lineIndex].length) {
+                        const timer = setTimeout(() => {
+                            setTypedText(prev => prev + codeLines[lineIndex][charIndex]);
+                            setCharIndex(c => c + 1);
+                        }, 15);
+                        return () => clearTimeout(timer);
+                    } else {
+                        const timer = setTimeout(() => {
+                            setTypedText(prev => prev + '\n');
+                            setLineIndex(l => l + 1);
+                            setCharIndex(0);
+                        }, 30);
+                        return () => clearTimeout(timer);
+                    }
+                } else {
+                    setTitleVisible(true);
+                }
+            }, [lineIndex, charIndex]);
+
+            return (
+                <section className="hero" id="hero">
+                    <div className="hero-orb hero-orb1"></div>
+                    <div className="hero-orb hero-orb2"></div>
+                    <div className="hero-orb hero-orb3"></div>
+                    <div className="code-rain">
+                        <pre>{typedText}<span style={{animation:'blink 0.7s infinite',borderRight:'2px solid var(--primary)'}}>&nbsp;</span></pre>
+                    </div>
+                    <div className="container">
+                        <div className="hero-content">
+                            <div className="hero-badge" style={titleVisible ? {} : {opacity:0}}>
+                                <span className="hero-badge-dot"></span>
+                                Disponible pour missions
+                            </div>
+                            <h1 className="hero-name" style={titleVisible ? {} : {opacity:0}}>
+                                <span>Kablankan</span><br/>Tiemele Israël Kévin
+                            </h1>
+                            <p className="hero-title" style={titleVisible ? {} : {opacity:0}}>
+                                Architecte Logiciel | Ingénieur en IA Appliquée | Lead Developer
+                            </p>
+                            <p className="hero-description" style={titleVisible ? {} : {opacity:0}}>
+                                Je conçois des écosystèmes logiciels autonomes où l'IA n'est pas une fonctionnalité,
+                                mais un <strong>membre actif de l'équipe de développement</strong>, orchestrée avec
+                                une précision chirurgicale.
+                            </p>
+                            <div className="hero-cta" style={titleVisible ? {} : {opacity:0}}>
+                                <a href="#projects" className="btn btn-primary" onClick={e=>{e.preventDefault();document.getElementById('projects').scrollIntoView({behavior:'smooth'});}}>
+                                    <span>🚀</span> Voir mes réalisations
+                                </a>
+                                <a href="#contact" className="btn btn-outline" onClick={e=>{e.preventDefault();document.getElementById('contact').scrollIntoView({behavior:'smooth'});}}>
+                                    <span>📬</span> Me contacter
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            );
+        }
+
+        function Stats() {
+            const stats = [
+                { number: '15+', label: 'Projets Complexes' },
+                { number: '8+', label: 'Stacks Maîtrisées' },
+                { number: '10K+', label: 'Heures de Code' },
+                { number: '∞', label: 'Capacité d\'Apprentissage' },
+            ];
+            return (
+                <div className="container">
+                    <div className="stats-grid">
+                        {stats.map((s, i) => (
+                            <div className="stat-card" key={i}>
+                                <div className="stat-number">{s.number}</div>
+                                <div className="stat-label">{s.label}</div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            );
+        }
+
+        function About() {
+            return (
+                <section className="section" id="about">
+                    <div className="container">
+                        <h2 className="section-title"><span>À propos</span> de moi</h2>
+                        <p className="section-subtitle">
+                            Un développeur autodidacte devenu architecte de systèmes complexes.
+                        </p>
+                        <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(300px,1fr))',gap:'32px'}}>
+                            <div style={{background:'var(--surface)',border:'1px solid var(--border)',borderRadius:'16px',padding:'32px'}}>
+                                <div style={{fontSize:'2rem',marginBottom:'16px'}}>🧠</div>
+                                <h3 style={{fontFamily:'Space Grotesk',marginBottom:'12px'}}>Mon Super-Pouvoir</h3>
+                                <p style={{color:'var(--text2)',lineHeight:1.8}}>
+                                    Comprendre et maîtriser toute nouvelle technologie en un temps record,
+                                    comme si je la pratiquais depuis des années. Je ne "vibe code" pas :
+                                    <strong> je dirige l'IA pour forger un code plus robuste et plus sûr</strong>.
+                                </p>
+                            </div>
+                            <div style={{background:'var(--surface)',border:'1px solid var(--border)',borderRadius:'16px',padding:'32px'}}>
+                                <div style={{fontSize:'2rem',marginBottom:'16px'}}>🎯</div>
+                                <h3 style={{fontFamily:'Space Grotesk',marginBottom:'12px'}}>Ma Vision</h3>
+                                <p style={{color:'var(--text2)',lineHeight:1.8}}>
+                                    Transformer des concepts en solutions logicielles robustes, évolutives et
+                                    monétisables. Mon approche holistique couvre l'infrastructure, le développement,
+                                    la sécurité et le déploiement.
+                                </p>
+                            </div>
+                            <div style={{background:'var(--surface)',border:'1px solid var(--border)',borderRadius:'16px',padding:'32px'}}>
+                                <div style={{fontSize:'2rem',marginBottom:'16px'}}>🔐</div>
+                                <h3 style={{fontFamily:'Space Grotesk',marginBottom:'12px'}}>Sécurité First</h3>
+                                <p style={{color:'var(--text2)',lineHeight:1.8}}>
+                                    Chaque ligne de code est pensée pour la sécurité. Audit, sanitization,
+                                    rate limiting, chiffrement : la sécurité n'est pas une option, c'est
+                                    une obsession intégrée à l'architecture.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            );
+        }
+
+        function Projects() {
+            const [expanded, setExpanded] = useState(null);
+            const projects = [
+                {
+                    icon: '💬', name: 'Heylee', desc: 'Messagerie instantanée sécurisée avec Heylee ID virtuel, traitement vidéo asynchrone et présence temps réel.',
+                    tech: ['Flutter', 'Node.js', 'MongoDB', 'Redis', 'WebSocket', 'BullMQ'],
+                    detail: 'Architecture complète de messagerie avec système d\'identifiant propriétaire, chiffrement, chat temps réel multi-devices, capture vidéo multi-segments avec traitement FFmpeg, et file d\'attente hors-ligne. Infrastructure scalable avec Kubernetes, PgBouncer, et monitoring Prometheus/Grafana.'
+                },
+                {
+                    icon: '🖥️', name: 'Web IDE + AI Copilot', desc: 'IDE avec agent IA orchestrateur capable de naviguer et contrôler le système d\'exploitation.',
+                    tech: ['React', 'Node.js', 'Ollama', 'Gemini', 'Groq'],
+                    detail: 'Système d\'orchestration IA multi-providers intégré à un IDE web. L\'agent peut créer des fichiers, exécuter des commandes terminal, et gérer des discussions simultanées avec conscience inter-discussions. Interface épurée avec filtrage intelligent des balises de réflexion.'
+                },
+                {
+                    icon: '📈', name: 'ForexBot SaaS', desc: 'Système de trading algorithmique avec IA multi-providers et Risk Guardian intégré.',
+                    tech: ['Python', 'MetaTrader5', 'Flask', 'OpenAI', 'DeepSeek'],
+                    detail: 'Bot de trading autonome avec moteur de décision IA multi-providers (Groq, OpenAI, DeepSeek). Système de gestion des risques intégré avec position sizing ATR, kill switch, et journal de trading immuable hashé SHA-256. Dashboard de contrôle en temps réel avec switching de provider IA.'
+                },
+                {
+                    icon: '🏗️', name: 'Fiers Artisans', desc: 'Marketplace mobile géolocalisée avec vérification documentaire et abonnement.',
+                    tech: ['Flutter', 'NestJS', 'Next.js', 'PostGIS', 'Docker'],
+                    detail: 'Plateforme de mise en relation clients-artisans avec recherche géolocalisée, messagerie temps réel, vérification documentaire et système d\'abonnement. Infrastructure complète avec microservices, MinIO pour le stockage, et pipeline CI/CD.'
+                },
+                {
+                    icon: '🎨', name: 'BOOMS Platform', desc: 'Plateforme de gestion et vente d\'œuvres numériques tokenisées.',
+                    tech: ['FastAPI', 'Next.js', 'React Native', 'PostgreSQL', 'Redis'],
+                    detail: 'Écosystème complet de marketplace d\'actifs numériques avec wallet utilisateur, système de gifts, transactions temps réel via WebSocket, et intégration de paiements multiples (Stripe, Wave, Orange Money).'
+                },
+                {
+                    icon: '📁', name: 'Center Platform', desc: 'SaaS de gestion de fichiers collaboratif avec transferts sécurisés.',
+                    tech: ['React', 'Express', 'Prisma', 'PostgreSQL', 'Socket.IO'],
+                    detail: 'Solution de stockage hiérarchique avec file d\'attente de jobs pour la corbeille, transferts entre comptes, prévisualisation avancée, et maintenance automatisée. Architecture événementielle avec notifications temps réel.'
+                },
+            ];
+
+            const handleMouseMove = (e, card) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty('--mx', x + 'px');
+                card.style.setProperty('--my', y + 'px');
+            };
+
+            return (
+                <section className="section" id="projects">
+                    <div className="container">
+                        <h2 className="section-title"><span>Mes</span> Réalisations</h2>
+                        <p className="section-subtitle">
+                            Des projets complexes qui démontrent la maîtrise de tout le cycle de vie logiciel.
+                        </p>
+                        <div className="projects-grid">
+                            {projects.map((p, i) => (
+                                <div
+                                    key={i}
+                                    className="project-card"
+                                    onClick={() => setExpanded(p)}
+                                    onMouseMove={(e) => handleMouseMove(e, e.currentTarget)}
+                                    style={{animation: `slideUp 0.6s ease-out ${i*0.1}s both`}}
+                                >
+                                    <div className="project-icon">{p.icon}</div>
+                                    <h3 className="project-name">{p.name}</h3>
+                                    <p className="project-desc">{p.desc}</p>
+                                    <div className="project-tech">
+                                        {p.tech.map((t, j) => <span key={j}>{t}</span>)}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                    {expanded && (
+                        <div className="modal-overlay" onClick={() => setExpanded(null)}>
+                            <div className="modal-content" onClick={e => e.stopPropagation()} style={{position:'relative'}}>
+                                <button className="modal-close" onClick={() => setExpanded(null)}>✕</button>
+                                <div style={{fontSize:'3rem',marginBottom:'16px'}}>{expanded.icon}</div>
+                                <h2 style={{fontFamily:'Space Grotesk',fontSize:'1.8rem',marginBottom:'12px'}}>{expanded.name}</h2>
+                                <p style={{color:'var(--text2)',lineHeight:1.8,marginBottom:'20px'}}>{expanded.detail}</p>
+                                <div className="project-tech">
+                                    {expanded.tech.map((t, j) => <span key={j} style={{fontSize:'0.85rem',padding:'6px 14px'}}>{t}</span>)}
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                </section>
+            );
+        }
+
+        function Skills() {
+            const skillCategories = [
+                { title: '🧩 Frontend', skills: ['React', 'Next.js', 'Flutter', 'TypeScript', 'Tailwind CSS', 'Framer Motion'] },
+                { title: '⚙️ Backend', skills: ['Node.js', 'Express', 'NestJS', 'FastAPI', 'Python', 'Flask'] },
+                { title: '🗄️ Bases de données', skills: ['PostgreSQL', 'MongoDB', 'Redis', 'Prisma', 'Mongoose', 'TypeORM'] },
+                { title: '🤖 IA & ML', skills: ['OpenAI', 'Groq', 'DeepSeek', 'Ollama', 'LangChain', 'Prompt Engineering'] },
+                { title: '🚀 DevOps', skills: ['Docker', 'Kubernetes', 'Nginx', 'CI/CD', 'PM2', 'Prometheus'] },
+                { title: '🔐 Sécurité', skills: ['JWT', 'OAuth2', 'bcrypt', 'SHA-256', 'Rate Limiting', 'XSS Prevention'] },
+            ];
+
+            return (
+                <section className="section" id="skills">
+                    <div className="container">
+                        <h2 className="section-title"><span>Compétences</span> Techniques</h2>
+                        <p className="section-subtitle">
+                            Un arsenal technologique complet pour construire des solutions robustes de bout en bout.
+                        </p>
+                        {skillCategories.map((cat, i) => (
+                            <div key={i} style={{marginBottom:'40px'}}>
+                                <h3 style={{fontFamily:'Space Grotesk',fontSize:'1.2rem',marginBottom:'16px'}}>{cat.title}</h3>
+                                <div className="skills-container">
+                                    {cat.skills.map((s, j) => (
+                                        <span
+                                            key={j}
+                                            className="skill-tag"
+                                            style={{animation: `scaleIn 0.3s ease-out ${i*0.1 + j*0.05}s both`}}
+                                        >
+                                            {s}
+                                        </span>
+                                    ))}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </section>
+            );
+        }
+
+        function Experience() {
+            const experiences = [
+                {
+                    date: '2024 — Présent',
+                    title: 'Architecte Logiciel & Ingénieur IA (Freelance)',
+                    desc: 'Conception et développement d\'écosystèmes logiciels complets pour des clients privés. Direction technique de projets complexes incluant des agents IA autonomes, des plateformes SaaS et des applications mobiles temps réel.'
+                },
+                {
+                    date: '2023 — Présent',
+                    title: 'Lead Developer — Projets Personnels',
+                    desc: 'Architecture et implémentation de plus de 15 projets majeurs couvrant la messagerie instantanée, le trading algorithmique, les marketplaces et les IDE intelligents. Maîtrise de stacks full stack avec orchestration d\'IA.'
+                },
+                {
+                    date: '2021 — 2023',
+                    title: 'Développeur Full Stack Autodidacte',
+                    desc: 'Apprentissage intensif et maîtrise des technologies web et mobiles. Développement des premières applications complètes en React, Node.js, et Flutter. Acquisition des fondamentaux en architecture logicielle et cybersécurité.'
+                },
+            ];
+            return (
+                <section className="section" id="experience" style={{background:'var(--surface)'}}>
+                    <div className="container">
+                        <h2 className="section-title"><span>Mon</span> Parcours</h2>
+                        <p className="section-subtitle">
+                            De l'autodidacte passionné à l'architecte de systèmes autonomes.
+                        </p>
+                        <div className="timeline">
+                            {experiences.map((exp, i) => (
+                                <div key={i} className="timeline-item" style={{animation:`slideRight 0.6s ease-out ${i*0.2}s both`}}>
+                                    <div className="timeline-dot"></div>
+                                    <div className="timeline-date">{exp.date}</div>
+                                    <div className="timeline-title">{exp.title}</div>
+                                    <div className="timeline-desc">{exp.desc}</div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+            );
+        }
+
+        function Education() {
+            return (
+                <section className="section" id="education">
+                    <div className="container">
+                        <h2 className="section-title"><span>Formation</span> & Certifications</h2>
+                        <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(300px,1fr))',gap:'24px'}}>
+                            <div style={{background:'var(--surface)',border:'1px solid var(--border)',borderRadius:'16px',padding:'32px'}}>
+                                <div style={{fontSize:'1.5rem',marginBottom:'12px'}}>🎓</div>
+                                <h3 style={{fontFamily:'Space Grotesk',marginBottom:'8px'}}>Licence en Administration & Digitalisation</h3>
+                                <p style={{color:'var(--accent)',marginBottom:'8px',fontWeight:500}}>UVCI — Cocody, Côte d'Ivoire</p>
+                                <p style={{color:'var(--text2)'}}>En cours (2ème année) — Transformation digitale des processus de gestion</p>
+                            </div>
+                            <div style={{background:'var(--surface)',border:'1px solid var(--border)',borderRadius:'16px',padding:'32px'}}>
+                                <div style={{fontSize:'1.5rem',marginBottom:'12px'}}>📜</div>
+                                <h3 style={{fontFamily:'Space Grotesk',marginBottom:'8px'}}>Certifications Google & Microsoft</h3>
+                                <p style={{color:'var(--accent)',marginBottom:'8px',fontWeight:500}}>Coursera</p>
+                                <p style={{color:'var(--text2)'}}>Google Workspace (Drive, Docs, Sheets, Slides, Gmail) • Microsoft Office (Excel, PowerPoint)</p>
+                            </div>
+                            <div style={{background:'var(--surface)',border:'1px solid var(--border)',borderRadius:'16px',padding:'32px'}}>
+                                <div style={{fontSize:'1.5rem',marginBottom:'12px'}}>💡</div>
+                                <h3 style={{fontFamily:'Space Grotesk',marginBottom:'8px'}}>Formation Continue</h3>
+                                <p style={{color:'var(--accent)',marginBottom:'8px',fontWeight:500}}>Autodidacte — 10 000+ heures</p>
+                                <p style={{color:'var(--text2)'}}>Ma véritable école est la pratique. Chaque projet est le résultat de milliers d'heures de recherche et d'expérimentation.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            );
+        }
+
+        function Contact() {
+            const [copied, setCopied] = useState('');
+            const copyToClipboard = (text, label) => {
+                navigator.clipboard.writeText(text);
+                setCopied(label);
+                setTimeout(() => setCopied(''), 2000);
+            };
+            return (
+                <section className="section" id="contact" style={{background:'var(--surface)'}}>
+                    <div className="container" style={{textAlign:'center'}}>
+                        <h2 className="section-title"><span>Contactez</span>-moi</h2>
+                        <p className="section-subtitle" style={{margin:'0 auto 40px'}}>
+                            Prêt à collaborer sur votre prochain projet ambitieux.
+                        </p>
+                        <div style={{display:'flex',flexDirection:'column',alignItems:'center',gap:'20px',maxWidth:'500px',margin:'0 auto'}}>
+                            <div
+                                onClick={() => copyToClipboard('kablankankevinisrael@gmail.com', 'email')}
+                                style={{background:'var(--surface2)',border:'1px solid var(--border)',borderRadius:'12px',padding:'20px 32px',width:'100%',cursor:'pointer',transition:'all 0.3s',display:'flex',alignItems:'center',gap:'16px'}}
+                                onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--primary)'}
+                                onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--border)'}
+                            >
+                                <span style={{fontSize:'1.5rem'}}>✉️</span>
+                                <span style={{color:'var(--text2)'}}>kablankankevinisrael@gmail.com</span>
+                                <span style={{marginLeft:'auto',color:'var(--accent)',fontSize:'0.8rem'}}>{copied === 'email' ? '✓ Copié !' : '📋'}</span>
+                            </div>
+                            <div
+                                onClick={() => copyToClipboard('+2250703063570', 'tel1')}
+                                style={{background:'var(--surface2)',border:'1px solid var(--border)',borderRadius:'12px',padding:'20px 32px',width:'100%',cursor:'pointer',transition:'all 0.3s',display:'flex',alignItems:'center',gap:'16px'}}
+                                onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--primary)'}
+                                onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--border)'}
+                            >
+                                <span style={{fontSize:'1.5rem'}}>📱</span>
+                                <span style={{color:'var(--text2)'}}>+225 07 03 06 35 70</span>
+                                <span style={{marginLeft:'auto',color:'var(--accent)',fontSize:'0.8rem'}}>{copied === 'tel1' ? '✓ Copié !' : '📋'}</span>
+                            </div>
+                            <div
+                                onClick={() => copyToClipboard('+2250503265984', 'tel2')}
+                                style={{background:'var(--surface2)',border:'1px solid var(--border)',borderRadius:'12px',padding:'20px 32px',width:'100%',cursor:'pointer',transition:'all 0.3s',display:'flex',alignItems:'center',gap:'16px'}}
+                                onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--primary)'}
+                                onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--border)'}
+                            >
+
+
+<span style={{fontSize:'1.5rem'}}>📞</span>
+                                <span style={{color:'var(--text2)'}}>+225 05 03 26 59 84</span>
+                                <span style={{marginLeft:'auto',color:'var(--accent)',fontSize:'0.8rem'}}>{copied === 'tel2' ? '✓ Copié !' : '📋'}</span>
+                            </div>
+                            <a
+                                href="https://github.com/Mellykelkun"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="btn btn-outline"
+                                style={{width:'100%',justifyContent:'center',textDecoration:'none'}}
+                            >
+                                <span>🔗</span> github.com/Mellykelkun
+                            </a>
+                        </div>
+                    </div>
+                </section>
+            );
+        }
+
+        function Footer() {
+            return (
+                <footer className="footer">
+                    <p className="footer-text">
+                        © {new Date().getFullYear()} Kablankan Tiemele Israël Kévin — Tous droits réservés.
+                    </p>
+                    <p style={{color:'var(--text2)',fontSize:'0.8rem',marginTop:'8px'}}>
+                        Construit avec ❤️ et beaucoup de code.
+                    </p>
+                </footer>
+            );
+        }
+
+        function App() {
+            useParticles();
+            useCursorGlow();
+            const [scrolled, setScrolled] = useState(false);
+            const [showScrollTop, setShowScrollTop] = useState(false);
+
+            useEffect(() => {
+                const h = () => {
+                    setScrolled(window.scrollY > 50);
+                    setShowScrollTop(window.scrollY > 500);
+                };
+                window.addEventListener('scroll', h);
+                return () => window.removeEventListener('scroll', h);
+            }, []);
+
+            return (
+                <div>
+                    <Navbar />
+                    <main>
+                        <Hero />
+                        <Stats />
+                        <About />
+                        <Projects />
+                        <Skills />
+                        <Experience />
+                        <Education />
+                        <Contact />
+                    </main>
+                    <Footer />
+                    {showScrollTop && (
+                        <button
+                            onClick={() => window.scrollTo({top:0,behavior:'smooth'})}
+                            style={{
+                                position:'fixed',bottom:'30px',right:'30px',zIndex:1000,
+                                width:'50px',height:'50px',borderRadius:'50%',
+                                background:'var(--primary)',color:'white',border:'none',
+                                fontSize:'1.2rem',cursor:'pointer',
+                                boxShadow:'0 4px 20px rgba(108,92,231,0.5)',
+                                transition:'all 0.3s',
+                                display:'flex',alignItems:'center',justifyContent:'center'
+                            }}
+                            onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-3px)'}
+                            onMouseLeave={e => e.currentTarget.style.transform = 'translateY(0)'}
+                        >
+                            ↑
+                        </button>
+                    )}
+                </div>
+            );
+        }
+
+        ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+    </script>
+</body>
+</html>
