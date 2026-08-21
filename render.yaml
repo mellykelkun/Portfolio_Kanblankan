@@ -4,19 +4,11 @@ services:
     env: node
     region: frankfurt
     plan: free
-    buildCommand: npm install
-    startCommand: node server.js
+    buildCommand: npm install && npm run build
+    startCommand: npm run start -- -p $PORT
     healthCheckPath: /api/health
     envVars:
       - key: NODE_ENV
         value: production
-      - key: PORT
-        value: 3000
-      - key: PUBLIC_URL
+      - key: NEXT_PUBLIC_SITE_URL
         value: https://portfolio-kablankan.onrender.com
-      - key: CORS_ORIGIN
-        value: https://portfolio-kablankan.onrender.com
-      - key: RATE_LIMIT_WINDOW_MS
-        value: "900000"
-      - key: RATE_LIMIT_MAX
-        value: "100"
