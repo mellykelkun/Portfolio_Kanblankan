@@ -4,8 +4,8 @@ services:
     env: node
     region: frankfurt
     plan: free
-    buildCommand: npm install && npm run build
-    startCommand: npm run start -- -p $PORT
+    buildCommand: npm install
+    startCommand: node server.js
     healthCheckPath: /api/health
     envVars:
       - key: NODE_ENV
