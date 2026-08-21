@@ -7,11 +7,12 @@ export default function Contact() {
         <div>
           <span className="surtitre">Contact</span>
           <h1>Un projet, une mission ou une opportunité ?</h1>
-          <p>Tu peux me joindre directement par email ou WhatsApp. Pour voir mon activité technique publique, GitHub est également disponible.</p>
+          <p>Tu peux me joindre directement par email ou WhatsApp, consulter mon activité sur GitHub et LinkedIn, ou télécharger mon CV à jour.</p>
         </div>
         <div className="carte-contact">
           <a href="mailto:tiemele.kablankan@uvci.edu.ci"><span>Email</span><strong>tiemele.kablankan@uvci.edu.ci</strong><em>Écrire →</em></a>
           <a href="https://wa.me/2250703063570" target="_blank" rel="noreferrer"><span>WhatsApp</span><strong>+225 07 03 06 35 70</strong><em>Discuter →</em></a>
+          <a href="/CV_Kablankan_Tiemele_Israel_Kevin.pdf" download><span>CV</span><strong>CV développeur full-stack 2026</strong><em>Télécharger ↓</em></a>
           <a href="https://github.com/mellykelkun" target="_blank" rel="noreferrer"><span>GitHub</span><strong>@mellykelkun</strong><em>Voir le profil →</em></a>
           <a href="https://www.linkedin.com/in/kablankan-tiemele-isra%C3%ABl-kevin-kablankan-91ab27408" target="_blank" rel="noreferrer"><span>LinkedIn</span><strong>Kablankan Tiemele</strong><em>Ouvrir →</em></a>
         </div>
