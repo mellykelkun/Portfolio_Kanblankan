@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import CarteProjet from "../composants/CarteProjet";
 import { projets, projetsPhares } from "../donnees/projets";
@@ -14,6 +15,7 @@ export default function Accueil() {
             <div className="hero-actions">
               <Link className="bouton bouton-primaire" href="/projets">Explorer mes projets</Link>
               <Link className="bouton bouton-secondaire" href="/contact">Me contacter</Link>
+              <a className="bouton bouton-secondaire" href="/CV_Kablankan_Tiemele_Israel_Kevin.pdf" download>Télécharger mon CV ↓</a>
             </div>
           </div>
           <aside className="carte-profil">
@@ -21,7 +23,16 @@ export default function Accueil() {
               <span className="point-orange"></span>
               <span>Disponible pour opportunités & collaborations</span>
             </div>
-            <div className="initiales">KT</div>
+            <div className="photo-profil-cadre">
+              <Image
+                className="photo-profil"
+                src="/kablankan-tiemele-israel-kevin.jpg"
+                alt="Portrait professionnel de Kablankan Tiemele Israël Kévin"
+                width={900}
+                height={1125}
+                priority
+              />
+            </div>
             <h2>Kablankan Tiemele Israël Kévin</h2>
             <p>Basé en Côte d'Ivoire. Je développe, j'apprends, je documente et je transforme des idées en systèmes concrets.</p>
             <div className="mini-grille">
