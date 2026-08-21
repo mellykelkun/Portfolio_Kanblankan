@@ -25,10 +25,11 @@ export default function Accueil() {
             <div className="photo-profil-cadre">
               <img
                 className="photo-profil"
-                src="/portrait-professionnel.svg"
+                src="/portrait-kevin.jpg"
                 alt="Portrait professionnel de Kablankan Tiemele Israël Kévin"
-                width="300"
-                height="375"
+                width="320"
+                height="400"
+                loading="eager"
               />
             </div>
             <h2>Kablankan Tiemele Israël Kévin</h2>
