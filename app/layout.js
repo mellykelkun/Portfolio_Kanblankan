@@ -1,9 +1,22 @@
 import "./globals.css";
+import "./transitions.css";
 import Entete from "../composants/Entete";
 import PiedPage from "../composants/PiedPage";
+import TransitionPage from "../composants/TransitionPage";
+
+function obtenirUrlSite() {
+  const url =
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    process.env.VERCEL_PROJECT_PRODUCTION_URL ||
+    "https://portfolio-kablankan.onrender.com";
+
+  return url.startsWith("http://") || url.startsWith("https://")
+    ? url
+    : `https://${url}`;
+}
 
 export const metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://portfolio-kablankan.onrender.com"),
+  metadataBase: new URL(obtenirUrlSite()),
   title: {
     default: "Kablankan Tiemele — Développeur Full Stack",
     template: "%s · Kablankan Tiemele"
@@ -21,7 +34,9 @@ export default function MiseEnPage({ children }) {
     <html lang="fr">
       <body>
         <Entete />
-        <main>{children}</main>
+        <main>
+          <TransitionPage>{children}</TransitionPage>
+        </main>
         <PiedPage />
       </body>
     </html>
