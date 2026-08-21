@@ -1,6 +1,6 @@
 import Link from "next/link";
 import CarteProjet from "../composants/CarteProjet";
-import { projetsPhares } from "../donnees/projets";
+import { projets, projetsPhares } from "../donnees/projets";
 
 export default function Accueil() {
   return (
@@ -14,6 +14,7 @@ export default function Accueil() {
             <div className="hero-actions">
               <Link className="bouton bouton-primaire" href="/projets">Explorer mes projets</Link>
               <Link className="bouton bouton-secondaire" href="/contact">Me contacter</Link>
+              <a className="bouton bouton-secondaire" href="/cv">Télécharger mon CV ↓</a>
             </div>
           </div>
           <aside className="carte-profil">
@@ -21,11 +22,19 @@ export default function Accueil() {
               <span className="point-orange"></span>
               <span>Disponible pour opportunités & collaborations</span>
             </div>
-            <div className="initiales">KT</div>
+            <div className="photo-profil-cadre">
+              <img
+                className="photo-profil"
+                src="/portrait-professionnel.svg"
+                alt="Portrait professionnel de Kablankan Tiemele Israël Kévin"
+                width="300"
+                height="375"
+              />
+            </div>
             <h2>Kablankan Tiemele Israël Kévin</h2>
             <p>Basé en Côte d'Ivoire. Je développe, j'apprends, je documente et je transforme des idées en systèmes concrets.</p>
             <div className="mini-grille">
-              <div><strong>17</strong><span>dépôts personnels</span></div>
+              <div><strong>{projets.length}</strong><span>projets & ressources</span></div>
               <div><strong>Full Stack</strong><span>web & backend</span></div>
               <div><strong>DevOps</strong><span>Docker & infra</span></div>
               <div><strong>Temps réel</strong><span>WebSocket & queues</span></div>
@@ -52,7 +61,7 @@ export default function Accueil() {
         <div className="conteneur">
           <div className="entete-section avec-action">
             <div><span className="surtitre">Sélection</span><h2>Projets phares</h2></div>
-            <Link className="lien-fleche" href="/projets">Voir les 17 dépôts →</Link>
+            <Link className="lien-fleche" href="/projets">Voir tous les projets →</Link>
           </div>
           <div className="grille-projets">
             {projetsPhares.map((projet) => <CarteProjet projet={projet} key={projet.slug} />)}

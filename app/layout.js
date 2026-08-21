@@ -1,5 +1,6 @@
 import "./globals.css";
 import "./transitions.css";
+import "./profil.css";
 import Entete from "../composants/Entete";
 import PiedPage from "../composants/PiedPage";
 import TransitionPage from "../composants/TransitionPage";

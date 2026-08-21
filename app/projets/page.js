@@ -3,7 +3,7 @@ import { projets } from "../../donnees/projets";
 
 export const metadata = {
   title: "Projets",
-  description: "Sélection complète des projets et dépôts de Kablankan Tiemele."
+  description: "Sélection des projets et ressources techniques de Kablankan Tiemele."
 };
 
 export default function PageProjets() {
@@ -11,9 +11,9 @@ export default function PageProjets() {
     <section className="section page-interne">
       <div className="conteneur">
         <div className="introduction-page">
-          <span className="surtitre">17 dépôts personnels</span>
-          <h1>Projets, produits et laboratoires.</h1>
-          <p>Je garde ici une vue honnête de mon travail : des produits avancés, des MVP, des outils internes et quelques dépôts d'expérimentation. Les dépôts privés sont décrits sans exposer leur code ni leurs données sensibles.</p>
+          <span className="surtitre">{projets.length} projets & ressources</span>
+          <h1>Produits, applications et outils techniques.</h1>
+          <p>Cette sélection présente uniquement des projets construits, des MVP fonctionnels et des ressources techniques réellement travaillées. Les dépôts privés sont décrits sans exposer leur code ni leurs données sensibles.</p>
         </div>
         <div className="grille-projets">
           {projets.map((projet) => <CarteProjet projet={projet} key={projet.slug} />)}

@@ -1,0 +1,23 @@
+.photo-profil-cadre {
+  margin: 26px 0 20px;
+  overflow: hidden;
+  border: 1px solid var(--gris-clair);
+  border-radius: 26px;
+  background: var(--orange-pale);
+  box-shadow: 0 18px 45px rgba(16, 16, 16, .09);
+}
+
+.photo-profil {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: center 20%;
+}
+
+@media (max-width: 900px) {
+  .carte-profil {
+    max-width: 520px;
+  }
+}

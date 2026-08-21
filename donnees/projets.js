@@ -1,15 +1,27 @@
 export const projets = [
   {
-    slug: "fiers-artisans",
-    nom: "Fiers Artisans",
-    type: "Produit / Marketplace",
+    slug: "fiers-artisans-app",
+    nom: "Fiers Artisans — Application",
+    type: "Marketplace mobile / Plateforme",
     statut: "Projet phare",
+    depot: "Collectif-Dev/Fiers_Artisans",
+    prive: true,
+    resume: "Application complète reliant clients et artisans vérifiés en Côte d'Ivoire, avec géolocalisation, messagerie temps réel, abonnements et administration.",
+    description: "Fiers Artisans est le cœur applicatif du produit. L'écosystème réunit une application Flutter pour les clients et artisans, une API NestJS, un espace d'administration Next.js et une infrastructure conteneurisée. Le projet couvre la recherche géolocalisée, les profils professionnels, la messagerie temps réel, la vérification documentaire et la gestion des abonnements artisans.",
+    technologies: ["Flutter", "NestJS", "Next.js", "PostgreSQL", "PostGIS", "MongoDB", "Redis", "Docker"],
+    points: ["Application mobile clients et artisans", "API et messagerie temps réel", "Géolocalisation avec PostGIS", "Administration web et infrastructure Docker"]
+  },
+  {
+    slug: "fiers-artisans-presentation",
+    nom: "Fiers Artisans — Présentation",
+    type: "Site produit / Landing",
+    statut: "Production",
     depot: "mellykelkun/fiers-artisans-landing",
     prive: true,
-    resume: "Site multipage de présentation d'une marketplace qui met en relation clients et artisans, avec des parcours distincts pour clients, professionnels et investisseurs.",
-    description: "Le projet travaille la présentation d'un produit destiné au marché ivoirien : découverte des artisans, confiance, visibilité professionnelle et préparation au lancement. Le site vitrine est structuré en plusieurs parcours et pensé pour le SEO, la PWA et le déploiement continu.",
+    resume: "Site multipage de présentation de Fiers Artisans avec des parcours distincts pour clients, artisans et investisseurs.",
+    description: "Ce dépôt est la vitrine du produit Fiers Artisans. Il présente le fonctionnement de la marketplace, ses bénéfices, sa vision et ses parcours utilisateurs sans mélanger le code du produit principal avec sa communication publique.",
     technologies: ["Next.js", "React", "TypeScript", "PWA", "Render"],
-    points: ["Parcours clients, artisans et investisseurs", "Architecture multipage", "SEO et métadonnées", "Déploiement Render avec CI/CD"]
+    points: ["Parcours clients, artisans et investisseurs", "Architecture multipage", "SEO et métadonnées", "Déploiement continu"]
   },
   {
     slug: "booms-platform",
@@ -87,7 +99,7 @@ export const projets = [
     slug: "mini-skills-agent",
     nom: "Mini Skills Agent",
     type: "Outil développeur local",
-    statut: "Prototype",
+    statut: "Prototype fonctionnel",
     depot: "mellykelkun/MINI_SKILLS_AGENT.V1",
     prive: false,
     resume: "CLI locale qui orchestre plusieurs rôles de développement pour architecture, backend, revue et génération de tests.",
@@ -96,52 +108,16 @@ export const projets = [
     points: ["Pipeline local", "Architecture modulaire", "Revue et tests", "Aucune dépendance cloud obligatoire"]
   },
   {
-    slug: "heylee-prototype",
-    nom: "Heylee — Prototype initial",
-    type: "Prototype / Architecture",
-    statut: "Itération précédente",
-    depot: "mellykelkun/heylee",
-    prive: true,
-    resume: "Première architecture du projet Heylee autour de la messagerie, des statuts et du réseau social léger.",
-    description: "Cette première itération a servi à cadrer l'architecture backend, le temps réel, le stockage, les notifications et la stratégie de montée en charge avant la version Flutter plus complète.",
-    technologies: ["React Native", "Node.js", "PostgreSQL", "Redis", "Socket.IO"],
-    points: ["Cadrage produit", "Messagerie temps réel", "Architecture scalable", "Sécurité applicative"]
-  },
-  {
     slug: "promptube-locale",
     nom: "Promptube Locale",
     type: "Outil interne",
-    statut: "Développement",
+    statut: "Développement actif",
     depot: "mellykelkun/promptube-locale",
     prive: true,
     resume: "Espace local de travail pour structurer et administrer des modules de développement réutilisables.",
     description: "Le dépôt sert de base locale pour organiser des modules, leurs règles et leurs workflows de travail. Il privilégie une structure révisable et une utilisation hors production publique.",
     technologies: ["Node.js", "Markdown", "Git"],
     points: ["Modules réutilisables", "Documentation structurée", "Workflows de développement", "Gestion locale"]
-  },
-  {
-    slug: "promptube",
-    nom: "Promptube",
-    type: "Produit en construction",
-    statut: "Base de projet",
-    depot: "mellykelkun/promptube",
-    prive: true,
-    resume: "Dépôt principal associé au projet Promptube et à son organisation de modules.",
-    description: "Ce dépôt sert de socle au projet Promptube. Les travaux détaillés sont principalement réalisés dans l'environnement local dédié avant consolidation.",
-    technologies: ["Git", "Documentation", "Modules"],
-    points: ["Socle projet", "Versionnement", "Préparation des modules"]
-  },
-  {
-    slug: "projet-prompt",
-    nom: "Projet Prompt",
-    type: "R&D",
-    statut: "Expérimentation",
-    depot: "mellykelkun/projet_prompt",
-    prive: true,
-    resume: "Dépôt d'expérimentation autour de la structuration de prompts, règles et méthodes de travail assistées.",
-    description: "Le projet sert de laboratoire pour formaliser des méthodes reproductibles, tester différentes structures et conserver les versions utiles.",
-    technologies: ["Markdown", "Git", "Workflows"],
-    points: ["Expérimentation", "Structuration", "Versionnement", "Méthodologie"]
   },
   {
     slug: "roue-fortune-hk",
@@ -158,7 +134,7 @@ export const projets = [
   {
     slug: "mes-cours-dev",
     nom: "Mes cours en dev",
-    type: "Formation",
+    type: "Formation / Ressources",
     statut: "Actif",
     depot: "mellykelkun/Mes_cours_en_devs",
     prive: true,
@@ -168,45 +144,21 @@ export const projets = [
     points: ["Supports de cours", "Révisions", "Transmission", "Notes techniques"]
   },
   {
-    slug: "site-labo",
-    nom: "Site Labo",
-    type: "Laboratoire web",
-    statut: "Expérimentation",
-    depot: "mellykelkun/site-labo",
-    prive: true,
-    resume: "Petit dépôt de laboratoire utilisé pour des essais web ciblés.",
-    description: "Un espace volontairement léger pour tester rapidement des idées avant de les intégrer à des projets plus structurés.",
-    technologies: ["Web", "Git"],
-    points: ["Prototypage rapide", "Tests isolés"]
-  },
-  {
-    slug: "repos-teste",
-    nom: "Repos Teste",
-    type: "Sandbox Git",
-    statut: "Expérimentation",
-    depot: "mellykelkun/repos_teste",
-    prive: false,
-    resume: "Dépôt public minimal utilisé pour des essais de versionnement et de workflow GitHub.",
-    description: "Ce dépôt n'est pas présenté comme un produit. Il sert simplement de sandbox technique pour tester des opérations Git et GitHub.",
-    technologies: ["Git", "GitHub"],
-    points: ["Tests Git", "Sandbox"]
-  },
-  {
     slug: "portfolio-kablankan",
     nom: "Portfolio Kablankan",
     type: "Portfolio",
     statut: "Production",
     depot: "mellykelkun/Portfolio_Kanblankan",
     prive: false,
-    resume: "Portfolio personnel construit avec Next.js et déployé sur Render.",
+    resume: "Portfolio personnel construit avec Next.js et déployable sur Render et Vercel.",
     description: "Cette version remplace l'ancienne SPA Express par une architecture Next.js multipage, plus rapide à parcourir et plus simple à maintenir.",
-    technologies: ["Next.js", "React", "CSS", "Render"],
-    points: ["App Router", "Pages projet dynamiques", "Responsive", "Déploiement Render"]
+    technologies: ["Next.js", "React", "CSS", "Render", "Vercel"],
+    points: ["App Router", "Pages projet dynamiques", "Responsive", "Déploiement Render et Vercel"]
   }
 ];
 
 export const projetsPhares = projets.filter((projet) => [
-  "fiers-artisans",
+  "fiers-artisans-app",
   "booms-platform",
   "center-platform",
   "heylee",
