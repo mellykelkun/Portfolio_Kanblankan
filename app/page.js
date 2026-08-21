@@ -1,5 +1,6 @@
 import Link from "next/link";
 import CarteProjet from "../composants/CarteProjet";
+import BoutonPartage from "../composants/BoutonPartage";
 import { projets, projetsPhares } from "../donnees/projets";
 
 export default function Accueil() {
@@ -15,6 +16,7 @@ export default function Accueil() {
               <Link className="bouton bouton-primaire" href="/projets">Explorer mes projets</Link>
               <Link className="bouton bouton-secondaire" href="/contact">Me contacter</Link>
               <a className="bouton bouton-secondaire" href="/cv">Télécharger mon CV ↓</a>
+              <BoutonPartage />
             </div>
           </div>
           <aside className="carte-profil">
